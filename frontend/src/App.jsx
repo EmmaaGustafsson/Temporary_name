@@ -61,45 +61,133 @@ function App() {
 };
 
   return (
-    <div>
-      <h1>My Books</h1>
+    <div style={styles.container}>
+      <h1 style={styles.title}>My Books</h1>
 
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div style={styles.form}>
+        <input
+          style={styles.input}
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-      <input
-        placeholder="Author"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-      />
+        <input
+          style={styles.input}
+          placeholder="Author"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
 
-      <button onClick={selectedId ? updateBook : addBook}>
-        {selectedId ? "Update Book" : "Add Book"}
-      </button>
+        <button style={styles.addButton} onClick={selectedId ? updateBook : addBook}>
+          {selectedId ? "Update Book" : "Add Book"}
+        </button>
+      </div>
 
-      {books.map((book, index) => (
-        <div key={index}>
-          <h3>{book.title}</h3>
-          <p>{book.author}</p>
-          <button onClick={() => deleteBook(book.id)}>
-            Delete
-          </button>
+      <div style={styles.list}>
+        {books.map((book) => (
+          <div key={book.id} style={styles.card}>
+            <h3>{book.title}</h3>
+            <p>{book.author}</p>
 
-          <button onClick={() => {
-            setSelectedId(book.id);
-            setTitle(book.title);
-            setAuthor(book.author);
-          }}>
-           Edit
-          </button>
+            <div style={styles.buttonGroup}>
+              <button
+                style={styles.editButton}
+                onClick={() => {
+                  setSelectedId(book.id);
+                  setTitle(book.title);
+                  setAuthor(book.author);
+                }}
+              >
+                Edit
+              </button>
 
-        </div>
-      ))}
+              <button
+                style={styles.deleteButton}
+                onClick={() => deleteBook(book.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default App;
+
+const styles = {
+  container: {
+    maxWidth: "600px",
+    margin: "40px auto",
+    fontFamily: "Arial, sans-serif",
+    textAlign: "center",
+  },
+
+  title: {
+    marginBottom: "20px",
+  },
+
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    marginBottom: "30px",
+  },
+
+  input: {
+    padding: "10px",
+    fontSize: "16px",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+  },
+
+  addButton: {
+    padding: "10px",
+    fontSize: "16px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+  },
+
+  list: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "15px",
+  },
+
+  card: {
+    padding: "15px",
+    borderRadius: "10px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    textAlign: "left",
+  },
+
+  buttonGroup: {
+    display: "flex",
+    gap: "10px",
+    marginTop: "10px",
+  },
+
+  editButton: {
+    padding: "6px 10px",
+    backgroundColor: "#2196F3",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
+
+  deleteButton: {
+    padding: "6px 10px",
+    backgroundColor: "#f44336",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
+};
